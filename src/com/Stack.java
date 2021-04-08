@@ -1,49 +1,70 @@
 package com;
 
-import java.util.Arrays;
+import java.util.EmptyStackException;
+
 
 public class Stack<T> {
 
-    private T[] capacity;
-    public int modCount;
+    private int size;
+    public Node head = null;
 
-    public Stack() {
-        this.capacity = (T[]) new Object[0];
+    class Node {
+        T value;
+        Node previous;
+
+        public Node(T value) {
+            this.value = value;
+            this.previous = null;
+        }
+
+        public void displayNodeData() {
+            System.out.println("{ " + value + " } ");
+        }
     }
 
-    public int size() {
-        return capacity.length;
-    }
-
-    public T[] push(T element) {
-        T[] newArray = Arrays.copyOf(capacity, size() + 1);
-        capacity = newArray;
-        capacity[capacity.length - 1] = element;
-        modCount++;
-        return newArray;
+    public void push(T elem) {
+        Node oldHead = head;
+        Node newHead = new Node(elem);
+        newHead.previous = oldHead;
+        head = newHead;
+        size++;
     }
 
     public T pop() {
-        T temp = capacity[size() - 1];
-        T[] newArray = Arrays.copyOf(capacity, size() - 1);
-        capacity = newArray;
-        modCount--;
-        return temp;
+        if (isEmpty()) {
+            throw new EmptyStackException();
+        } else {
+            Node temp = head;
+            head = head.previous;
+            size--;
+            return temp.value;
+        }
+    }
+
+    T top() {
+        if (isEmpty()) throw new EmptyStackException();
+        return head.value;
+    }
+
+    public int size() {
+        return size;
     }
 
     public boolean isEmpty() {
-        if (modCount  == 0) {
+        if (size == 0) {
             return true;
         } else {
             return false;
         }
-
     }
 
-    @Override
-    public String toString() {
-        return "Stack{" +
-                Arrays.toString(capacity) +
-                '}';
+    public void printStack() {
+        System.out.println("Printing Stack (head --> tail) ");
+        Node current = head;
+        while (current != null) {
+            current.displayNodeData();
+            current = current.previous;
+        }
+        System.out.println();
     }
 }
