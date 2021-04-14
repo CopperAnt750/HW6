@@ -11,19 +11,15 @@ public class DoublyLinkedList<T> {
 
     public DoublyLinkedList() {
         this.size = 0;
-        this.head = null;
-        this.tail = null;
     }
 
-    class Node<T> {
+    private class Node<T> {
         T item;
         Node<T> next;
         Node<T> prev;
 
         public Node(T elem) {
             this.item = elem;
-            this.next = null;
-            this.prev = null;
         }
 
         public Node(T elem, Node next, Node previous) {
@@ -102,11 +98,7 @@ public class DoublyLinkedList<T> {
     }
 
     public boolean isEmpty() {
-        if (size == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return (size == 0);
     }
 
 
@@ -133,7 +125,7 @@ public class DoublyLinkedList<T> {
 
     public Node removeLast() {
         if (size == 0) {
-            throw new RuntimeException("DoublyLinkedList is empty!");
+            throw new EmptyLinkedListException();
         }
         Node temp = tail;
         tail = temp.prev;

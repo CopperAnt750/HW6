@@ -6,15 +6,14 @@ import java.util.EmptyStackException;
 public class Stack<T> {
 
     private int size;
-    public Node head = null;
+    private Node head;
 
-    class Node {
+    private class Node {
         T value;
         Node previous;
 
         public Node(T value) {
             this.value = value;
-            this.previous = null;
         }
 
         public void displayNodeData() {
@@ -41,7 +40,7 @@ public class Stack<T> {
         }
     }
 
-    T top() {
+    public T top() {
         if (isEmpty()) throw new EmptyStackException();
         return head.value;
     }
@@ -51,11 +50,7 @@ public class Stack<T> {
     }
 
     public boolean isEmpty() {
-        if (size == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return (size == 0);
     }
 
     public void printStack() {
